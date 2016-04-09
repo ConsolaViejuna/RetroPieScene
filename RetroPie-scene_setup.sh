@@ -22,7 +22,7 @@ _msgEnciclopediaHomebrew(){
                     \n Iván e Ignacio. Más información en: http://www.unpasadomejor.com" 13 80
 }
 
-#Mensaje de información al instalar la enciclopedia homebrew
+#Mensaje de información al instalar la categoría Mojon Twins
 _msgMojonTwins(){
    dialog --title "Mojon Twins" \
           --msgbox "\n Se va a proceder a instalar la categoría Mojon Twins en tu sistema, 
@@ -35,6 +35,21 @@ _msgMojonTwins(){
                     \n a disposición de la comunidad.
                     \n Pásate por htpp://www.mojontwins.com y mira que de cosas apañadas
                     \n tienen" 18 80
+}
+
+#Mensaje de información al instalar la categoría Esp Soft
+_msgEspSoft(){
+   dialog --title "Esp Soft" \
+          --msgbox "\n Se va a proceder a instalar la categoría Esp Soft en tu sistema, 
+                    \n se añadirán todos los juegos de este fantástico grupo de
+                    \n desarrolladores.
+                    \n Esp Soft  es un grupo de programadores que se fundó en año 2004
+                    \n todo empezó en los foros al publicar un tutorial para programar
+                    \n juegos en ASM, siguió con la conversión de el famoso juego columns 
+                    \n para Amstrad. En su catalogo podemos encontrar desde estupendos
+                    \n juegos conversacionales a estupendas aventuras.
+                    \n Pásate por http://espsoft.blogspot.com.es y http://www.asmtrad.es
+                    \n y conoce más de cerca sus juegos y su historia" 18 80
 }
 
 #Mensaje indicando que el tema no se ha instalado
@@ -70,11 +85,12 @@ _msgNoRoot(){
 #-----------------------------
 
 _main () {
-   dialog --title "A sample application" \
+   dialog --title "RetroPie Scene Script by @ConsolaViejuna" \
            --menu "Por favor, elija una opción:" 15 80 5 \
                    1 "Instalar categoría Enciclopedia Hombrew" \
                    2 "Instalar categoría The Mojon Twins y sus juegos" \
-                   3 "Salir" 2> $tempfile3
+		   3 "Instalar categoría Esp Soft y sus juegos" \
+                   4 "Salir" 2> $tempfile3
 
    retv=$?
    choice=$(cat $tempfile3)
@@ -85,7 +101,9 @@ _main () {
            ;;
        2) _mojonTwins
            ;; 
-       3) clear
+       3) _msgEspSoft
+           ;; 
+       4) clear
           exit ;;
 
    esac
