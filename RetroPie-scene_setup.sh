@@ -10,6 +10,13 @@ trap "rm -f $tempfile1 $tempfile2 $tempfile3" 0 1 2 5 15
 #-- Mensajes de información --
 #-----------------------------
 
+#Mensaje de inicio
+_msgInicio(){
+    dialog --infobox "             RetroPie Script Scene v0.1
+                      \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 5
+
+}
+
 #Mensaje de información al instalar la enciclopedia homebrew
 _msgEnciclopediaHomebrew(){
    dialog --title "Enciclopedia Homebrew" \
@@ -85,7 +92,9 @@ _msgNoRoot(){
 #-----------------------------
 
 _main () {
-   dialog --title "RetroPie Scene Script by @ConsolaViejuna" \
+   
+  _msgInicio 
+  dialog --title "RetroPie Scene Script by @ConsolaViejuna" \
            --menu "Por favor, elija una opción:" 15 80 5 \
                    1 "Instalar categoría Enciclopedia Hombrew" \
                    2 "Instalar categoría The Mojon Twins y sus juegos" \
@@ -114,12 +123,18 @@ _crearDirectorios(){
   #Comprobamos si existen los directorios si no existen los creamos
   if [ ! -d /etc/emulationstation/themes/simple/homebrew/ ];
   then
-     mkdir /etc/emulationstation/themes/simple/homebrew
+    date +%H:%M:%S | echo "Se crea directorio homebrew en /etc/emulationstation/themes/simple/homebrew" >> log.txt 
+    mkdir /etc/emulationstation/themes/simple/homebrew >> log.txt
+  else
+    echo "El directorio /etc/emulationstation/themes/simple/homebrew ya está creado" >> log.txt 
   fi
   
   if [ ! -d /home/pi/RetroPie/roms/homebrew/ ];
   then
-     mkdir /home/pi/RetroPie/roms/homebrew
+    echo "El crea directorio hombrew en /home/pi/RetroPie/roms/homebrew" >> log.txt 
+    mkdir /home/pi/RetroPie/roms/homebrew >> log.txt
+  else
+    echo "EL directorio home/pi/RetroPie/roms/homebrew ya está creado" >> log.txt
   fi
 }
 
