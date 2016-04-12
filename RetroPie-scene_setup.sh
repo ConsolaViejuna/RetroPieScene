@@ -13,7 +13,7 @@ trap "rm -f $tempfile1 $tempfile2 $tempfile3" 0 1 2 5 15
 #Mensaje de inicio
 _msgInicio(){
     dialog --infobox "             RetroPie Script Scene v0.1
-                      \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 5
+                      \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
 
@@ -113,46 +113,88 @@ _main () {
        3) _msgEspSoft
            ;; 
        4) clear
-          exit ;;
+          _salir ;;
 
    esac
 }
 
+_salir(){
+  
+  echo "$(date +%H:%M:%S) - Cambiamos permisos a los ficheros" >> log.txt
+  sudo chown pi:pi log.txt >> log.txt
+  sudo chmod 775 log.txt >> log.txt
+  echo "$(date +%H:%M:%S) - Fin" >> log.txt
+  exit
+}
+
 #Crea los directorios necesarios
 _crearDirectorios(){
+  
+  local dir=$1
   #Comprobamos si existen los directorios si no existen los creamos
-  if [ ! -d /etc/emulationstation/themes/simple/homebrew/ ];
+  if [ ! -d /etc/emulationstation/themes/simple/$dir/ ];
   then
-    date +%H:%M:%S | echo "Se crea directorio homebrew en /etc/emulationstation/themes/simple/homebrew" >> log.txt 
-    mkdir /etc/emulationstation/themes/simple/homebrew >> log.txt
+    date +%H:%M:%S | echo "Se crea directorio $dir en /etc/emulationstation/themes/simple/$dir" >> log.txt 
+    mkdir /etc/emulationstation/themes/simple/$dir >> log.txt
   else
-    echo "El directorio /etc/emulationstation/themes/simple/homebrew ya está creado" >> log.txt 
+    echo "$(date +%H:%M:%S) - El directorio /etc/emulationstation/themes/simple/$dir ya está creado" >> log.txt 
   fi
   
-  if [ ! -d /home/pi/RetroPie/roms/homebrew/ ];
+  if [ ! -d /home/pi/RetroPie/roms/$dir/ ];
   then
-    echo "El crea directorio hombrew en /home/pi/RetroPie/roms/homebrew" >> log.txt 
-    mkdir /home/pi/RetroPie/roms/homebrew >> log.txt
+    echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/pi/RetroPie/roms/$dir" >> log.txt 
+    mkdir /home/pi/RetroPie/roms/$dir >> log.txt
   else
-    echo "EL directorio home/pi/RetroPie/roms/homebrew ya está creado" >> log.txt
+    echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
   fi
 }
 
+#Copia los elementos del tema
+_copiaElementosTema(){
+  echo "$(date +%H:%M:%S) - Copiamos los elementos del tema" >> log.txt  
+  local categoria=$1
+  sudo cp /home/pi/tmp/$categoria.png /etc/EmulationStation/themes/simple/$categoria/art/
+  sudo cp /home/pi/tmp/$categoria_art_blur.jpg /etc/EmulationStation/themes/$categoria/simple/art/
+  sudo cp /home/pi/tmp/theme.xml /etc/EmulationStation/themes/$categoria/simple/
+}
+
+#Dar permiso a los ficheros descargados
+_darPermisos(){
+  echo "$(date +%H:%M:%S) - Damos permisos a los ficheros descargados" >> log.txt  
+  sudo chown pi /home/pi/tmp/*.* 
+  sudo chgrp pi /home/pi/tmp/*.* 
+}
+
+
 #Descarga todos los archivos necesarios para crear la categoría
 _descargaElementos(){
-(
-  wget -q "https://3.bp.blogspot.com/-rMC18PXTXlA/VwJHz9pxLrI/AAAAAAABECc/Y1Yfzv23Cfc_wEGSWCzDUkTYDVv47ap4g/s1600/galactic_tomb_bann_blog.jpg"
-  echo 50
-  echo "###"
-  echo "50 %"
-  echo "###"
-  wget -q "https://3.bp.blogspot.com/-NjpNds76miw/Vv4wbYZ9qiI/AAAAAAABD78/aVfd6FINf9cjPEexEDJmdJ4oJqwX7aC_g/s320/pack20esp.jpg"
-  echo 100
-  echo "###"
-  echo "100 %"
-  echo "###"
-  ) |
+  echo "$(date +%H:%M:%S) - Descarga de imágenes para el tema" >> log.txt  
+  echo "$(date +%H:%M:%S) - Nos creamos directorio temporal" >> log.txt
+  
+  #Si el directorio /home/pi/tmp no esta creado, lo creamos
+  if [ ! -d /home/pi/tmp/ ];
+  then   
+    mkdir /home/pi/tmp >> log.txt
+  fi
+ 
+  local uri=$1
+  local archivos=$2
+  local incremento=$((100 / $archivos))
+  local porcentaje=$incremento
+  (
+    while read line
+    do 
+      wget -q -N -P /home/pi/tmp  $line >> log.txt
+      echo $porcentaje
+      echo "###"
+      echo "$porcentaje %"
+      echo "###"
+      local porcentaje=$(( $porcentaje + $incremento))
+    done < $1
+  )|
   dialog --title "Descargando imágenes" --gauge "Por favor espere ...." 10 60 0
+  echo "$(date +%H:%M:%S) - Finalizada la descarga" >> log.txt
+  _darPermisos
 }
 
 _enciclopediaHomebrew(){
@@ -162,11 +204,17 @@ _enciclopediaHomebrew(){
    #Miramos si está instalado el tema simple  
    if [ -d /etc/emulationstation/themes/simple/ ];
    then
+       echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
        _msgTemaSimpleInstalado
        _msgCreacionDirectorios
        #Creamos los directorios necesarios
-       _crearDirectorios
-       _descargaElementos
+       _crearDirectorios homebrew
+       #Descargamos los elementos necesarios del tema
+       _descargaElementos homebrewArt.uri 3
+       #Copiamos los elementos
+       _copiaElementosTema
+       #Volvemos al menú principal
+       #_main
    else
      _msgTemaNoInstalado
      clear

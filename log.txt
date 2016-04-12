@@ -1,0 +1,8 @@
+20:21:42 Iniciando script ...
+20:21:44 - El directorio /etc/emulationstation/themes/simple/homebrew ya está creado
+20:21:44 - El directorio home/pi/RetroPie/roms/homebrew ya está creado
+20:21:44 - Descarga de imágenes para el tema
+20:21:44 - Nos creamos directorio temporal
+20:21:45 - Finalizada la descarga
+20:21:45 - Damos permisos a los ficheros descargados
+20:21:45 - Copiamos los elementos del tema
