@@ -125,6 +125,9 @@ _copiaRoms(){
   echo "$(date +%H:%M:%S) - Copiamos los archivos .$extension" >> log.txt  
   cp /home/pi/tmp/*.$extension /home/pi/RetroPie/roms/$categoria
   echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos .$extension" >> log.txt  
+  chown pi /home/pi/RetroPie/roms/$categoria/*.*
+  chgrp pi /home/pi/RetroPie/roms/$categoria/*.*
+
   _borrarTemporales
 }
 
@@ -161,6 +164,8 @@ _crearDirectorios(){
   then
     echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/pi/RetroPie/roms/$dir" >> log.txt 
     mkdir /home/pi/RetroPie/roms/$dir >> log.txt
+    sudo chown pi homebrew/
+    sudo chgrp pi homebrew/
   else
     echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
   fi
