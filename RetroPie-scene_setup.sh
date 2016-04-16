@@ -87,10 +87,166 @@ _msgNoRoot(){
           --msgbox "\n Este script se deberá de ejecutar con permises de Superusuario" 8 90
 }
 
-#-----------------------------
-#-- Funciones ----------------
-#-----------------------------
+#Mensaje creando nueva categoria
+_msgCreacionCategoria(){
+    dialog --infobox "Se ha creado una nueva categoría en Emulationstation ..." 3 60
+}
+#-------------------- FIN MENSAJES DE INFORMACIÓN --------------
+#---------------------------------------------------------------
 
+
+
+
+
+#-----------------------AÑADIR ROMS ----------------------------
+
+#Copia las roms y los archivos .sh
+_copiaRoms(){
+  local categoria=$1
+  local extension=$2
+  echo "$(date +%H:%M:%S) - Copiamos los archivos .$extension" >> log.txt  
+  cp /home/pi/tmp/*.$extension /home/pi/RetroPie/roms/$categoria
+  echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos .$extension" >> log.txt  
+  _borrarTemporales
+}
+
+#-------------------- FIN AÑADIR ROMS --------------------------
+#---------------------------------------------------------------
+
+
+
+
+#------------ CONFIGURAR TEMA EN EMULATION STATION -------------
+
+#Crea los directorios necesarios
+_crearDirectorios(){
+  
+  local dir=$1
+  #Comprobamos si existen los directorios si no existen los creamos
+  if [ ! -d /etc/emulationstation/themes/simple/$dir/ ];
+  then
+    date +%H:%M:%S | echo "Se crea directorio $dir en /etc/emulationstation/themes/simple/$dir" >> log.txt 
+    mkdir /etc/emulationstation/themes/simple/$dir
+  else
+    echo "$(date +%H:%M:%S) - El directorio /etc/emulationstation/themes/simple/$dir ya está creado" >> log.txt 
+  fi
+  
+  if [ ! -d /etc/emulationstation/themes/simple/$dir/art/ ];
+  then
+    date +%H:%M:%S | echo "Se crea directorio art en /etc/emulationstation/themes/simple/$dir" >> log.txt 
+    mkdir /etc/emulationstation/themes/simple/$dir/art 
+  else
+    echo "$(date +%H:%M:%S) - El directorio /etc/emulationstation/themes/simple/$dir/art ya está creado" >> log.txt 
+  fi
+  
+  if [ ! -d /home/pi/RetroPie/roms/$dir/ ];
+  then
+    echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/pi/RetroPie/roms/$dir" >> log.txt 
+    mkdir /home/pi/RetroPie/roms/$dir >> log.txt
+  else
+    echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
+  fi
+}
+
+#Copia los elementos del tema
+_copiaElementosTema(){
+  echo "$(date +%H:%M:%S) - Copiamos los elementos del tema" >> log.txt  
+  local categoria=$1
+  local filename="_art_blur.jpg"
+  cp /home/pi/tmp/$categoria.png /etc/emulationstation/themes/simple/$categoria/art/ 
+  cp /home/pi/tmp/$categoria$filename /etc/emulationstation/themes/simple/$categoria/art 
+  cp /home/pi/tmp/theme.xml /etc/emulationstation/themes/simple/$categoria 
+  echo "$(date +%H:%M:%S) - Terminamos de copiar los elementos" >> log.txt  
+  _borrarTemporales
+}
+
+#Dar permiso a los ficheros descargados
+_darPermisos(){
+  echo "$(date +%H:%M:%S) - Damos permisos a los ficheros descargados" >> log.txt  
+  sudo chown pi /home/pi/tmp/*.* 
+  sudo chgrp pi /home/pi/tmp/*.* 
+  sudo chmod 777 /home/pi/tmp/*.*
+}  
+
+#Borramos fiheros temporales
+_borrarTemporales(){
+  echo "$(date +%H:%M:%S) - Borramos ficheros temporales" >> log.txt  
+  sudo rm /home/pi/tmp/*.*
+}
+
+#Descarga todos los archivos necesarios para crear la categoría
+_descargaElementos(){
+  local elemento="$3"
+  echo "$(date +%H:%M:%S) - Descarga de $elemento para el tema" >> log.txt  
+  echo "$(date +%H:%M:%S) - Nos creamos directorio temporal" >> log.txt
+  
+  #Si el directorio /home/pi/tmp no esta creado, o creamos
+  if [ ! -d /home/pi/tmp/ ];
+  then   
+    mkdir /home/pi/tmp 
+  fi
+ 
+  local uri="$1"
+  local archivos=$2
+  local incremento=$((100 / $archivos))
+  local porcentaje=$incremento
+  (
+    while read line
+    do 
+      wget -q -N -P /home/pi/tmp  $line >> log.txt
+      echo $porcentaje
+      echo "###"
+      echo "$porcentaje %"
+      echo "###"
+      local porcentaje=$(( $porcentaje + $incremento))
+    done < "$1"
+  )|
+  dialog --title "Descargando $elemento" --gauge "Por favor espere ...." 10 60 0
+  echo "$(date +%H:%M:%S) - Finalizada la descarga" >> log.txt
+  _darPermisos
+}
+
+
+#------------ FIN CONFIGURAR TEMA EN EMULATION STATION ------------------
+#------------------------------------------------------------------------
+
+
+
+#------------ AÑADIR NUEVA CATEGORÍA A EMULATIONSTATION------------------
+
+_modificaCfg(){
+  local categoria=$1
+  local nombreCategoria="$2"
+  echo $categoria
+  echo "$nombreCategoria"
+  if ! grep -q $categoria "/etc/emulationstation/es_systems.cfg" ; then
+    echo "$(date +%H:%M:%S) - Añadimos categoria al fichero es_system.cfg" >> log.txt
+CONTENT='         <system>\
+            <name>'"$categoria"'</name>\
+            <fullname>'"$descripcion"'</fullname>\
+            <path>/home/pi/RetroPie/roms/'"$categoria"'</path>\
+            <extension>.sh .SH</extension>\
+            <command>%ROM%</command>\
+            <platform>pc</platform>\
+            <theme></theme>\
+            <directlaunch/>\
+         </system>'
+
+  sed -i '/<\/systemList>/i\'"$CONTENT" /etc/emulationstation/es_systems.cfg
+  echo "$(date +%H:%M:%S) - Fin de la modificación del fichero de configuración" >> log.txt
+  else
+   echo "$(date +%H:%M:%S) - Se ha añadido la categoría con anterioridad" >> log.txt
+  fi
+  _msgCreacionCategoria
+ }
+
+#-----------FIN AÑADIR NUEVA CATEGORÍA A EMULATIONSTATION ---------------
+#------------------------------------------------------------------------
+
+
+#------------- OPERACIONES SOBRE EL MENÚ --------------------------------
+
+#Muestra el menú principal
 _main () {
    
   _msgInicio 
@@ -118,6 +274,7 @@ _main () {
    esac
 }
 
+#Salir del menú
 _salir(){
   
   echo "$(date +%H:%M:%S) - Cambiamos permisos a los ficheros" >> log.txt
@@ -127,76 +284,7 @@ _salir(){
   exit
 }
 
-#Crea los directorios necesarios
-_crearDirectorios(){
-  
-  local dir=$1
-  #Comprobamos si existen los directorios si no existen los creamos
-  if [ ! -d /etc/emulationstation/themes/simple/$dir/ ];
-  then
-    date +%H:%M:%S | echo "Se crea directorio $dir en /etc/emulationstation/themes/simple/$dir" >> log.txt 
-    mkdir /etc/emulationstation/themes/simple/$dir >> log.txt
-  else
-    echo "$(date +%H:%M:%S) - El directorio /etc/emulationstation/themes/simple/$dir ya está creado" >> log.txt 
-  fi
-  
-  if [ ! -d /home/pi/RetroPie/roms/$dir/ ];
-  then
-    echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/pi/RetroPie/roms/$dir" >> log.txt 
-    mkdir /home/pi/RetroPie/roms/$dir >> log.txt
-  else
-    echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
-  fi
-}
-
-#Copia los elementos del tema
-_copiaElementosTema(){
-  echo "$(date +%H:%M:%S) - Copiamos los elementos del tema" >> log.txt  
-  local categoria=$1
-  sudo cp /home/pi/tmp/$categoria.png /etc/EmulationStation/themes/simple/$categoria/art/
-  sudo cp /home/pi/tmp/$categoria_art_blur.jpg /etc/EmulationStation/themes/$categoria/simple/art/
-  sudo cp /home/pi/tmp/theme.xml /etc/EmulationStation/themes/$categoria/simple/
-}
-
-#Dar permiso a los ficheros descargados
-_darPermisos(){
-  echo "$(date +%H:%M:%S) - Damos permisos a los ficheros descargados" >> log.txt  
-  sudo chown pi /home/pi/tmp/*.* 
-  sudo chgrp pi /home/pi/tmp/*.* 
-}
-
-
-#Descarga todos los archivos necesarios para crear la categoría
-_descargaElementos(){
-  echo "$(date +%H:%M:%S) - Descarga de imágenes para el tema" >> log.txt  
-  echo "$(date +%H:%M:%S) - Nos creamos directorio temporal" >> log.txt
-  
-  #Si el directorio /home/pi/tmp no esta creado, lo creamos
-  if [ ! -d /home/pi/tmp/ ];
-  then   
-    mkdir /home/pi/tmp >> log.txt
-  fi
- 
-  local uri=$1
-  local archivos=$2
-  local incremento=$((100 / $archivos))
-  local porcentaje=$incremento
-  (
-    while read line
-    do 
-      wget -q -N -P /home/pi/tmp  $line >> log.txt
-      echo $porcentaje
-      echo "###"
-      echo "$porcentaje %"
-      echo "###"
-      local porcentaje=$(( $porcentaje + $incremento))
-    done < $1
-  )|
-  dialog --title "Descargando imágenes" --gauge "Por favor espere ...." 10 60 0
-  echo "$(date +%H:%M:%S) - Finalizada la descarga" >> log.txt
-  _darPermisos
-}
-
+#Instala opción hombrew
 _enciclopediaHomebrew(){
    #Mensaje de información
    _msgEnciclopediaHomebrew
@@ -210,10 +298,13 @@ _enciclopediaHomebrew(){
        #Creamos los directorios necesarios
        _crearDirectorios homebrew
        #Descargamos los elementos necesarios del tema
-       _descargaElementos homebrewArt.uri 3
+       _descargaElementos "homebrewArt.uri" 3 imágenes
        #Copiamos los elementos
-       _copiaElementosTema
+       _copiaElementosTema homebrew
        #Volvemos al menú principal
+       _modificaCfg homebrew "Enciclopedia Homebrew" 
+       _descargaElementos "homebrewSh.uri" 3 "comandos sh"   
+       _copiaRoms homebrew sh        
        #_main
    else
      _msgTemaNoInstalado
@@ -222,12 +313,19 @@ _enciclopediaHomebrew(){
    fi
 }
 
+#Instalar opción mojon twins
 _mojonTwins(){
   #Mensaje de información
   _msgMojonTwins
 
 }
 
+
+#---------- FIN OPERACIONES SOBRE EL MENÚ ------------------------
+#------------------------------------------------------------------
+
+
+#------------------- SCRIPT PRINCIPAL -------------------------------
 #Ejecución de script
 if [ "$(whoami)" != "root" ]; then
   _msgNoRoot
@@ -236,5 +334,4 @@ if [ "$(whoami)" != "root" ]; then
 else
   _main
 fi
-
 
