@@ -96,7 +96,7 @@ _msgFin(){
 
 #Mensaje directorios creados
 _msgActualizarScript(){
-    dialog --infobox "Actualizando script..." 2 60
+    dialog --infobox "Actualizando script ..." 4 40
 }
 
 #-------------------- FIN MENSAJES DE INFORMACIÓN --------------
@@ -283,13 +283,9 @@ _main () {
        1) _enciclopediaHomebrew
           _main
            ;;
-       2) _actualizarScript
-          _main
+       2)_actualizarScript
+         _main
            ;;
-       # 2) _mojonTwins
-       #    ;; 
-       # 3) _msgEspSoft
-       #    ;; 
        3) clear
           _salir ;;
 
