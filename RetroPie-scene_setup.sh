@@ -12,7 +12,7 @@ trap "rm -f $tempfile1 $tempfile2 $tempfile3" 0 1 2 5 15
 
 #Mensaje de inicio
 _msgInicio(){
-    dialog --infobox "             RetroPie Script Scene v0.1
+    dialog --infobox "             RetroPie Script Scene v0.2
                       \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
@@ -20,13 +20,7 @@ _msgInicio(){
 #Mensaje de información al instalar la enciclopedia homebrew
 _msgEnciclopediaHomebrew(){
    dialog --title "Enciclopedia Homebrew" \
-          --msgbox "\n Se va a proceder a instalar la categoría Enciclopedia Homebrew en tu
-                    \n sistema, donde podrás añadir todos los juegos que aparecen en este libro.
-                    \n La Enciclopedia Homebrew es s un libro que nace con la intención de llenar 
-                    \n el hueco que hacía falta acerca de todos aquellos videojuegos actuales que 
-                    \n se desarrollan para sistemas que ya hace muchos años que dejaron de 
-                    \n publicar juegos oficiales. Los creadores de este genial proyecto son Atila, 
-                    \n Iván e Ignacio. Más información en: http://www.unpasadomejor.com" 13 80
+          --msgbox "Se va a proceder a instalar la categoría Enciclopedia Homebrew en tu sistema, donde podrás añadir todos los juegos que aparecen en este libro. La Enciclopedia Homebrew es un libro que nace con la intención de llenar el hueco que hacía falta acerca de todos aquellos videojuegos actuales que se desarrollan para sistemas que ya hace muchos años que dejaron de publicar juegos oficiales. Los creadores de este genial proyecto son @blackmores_ de un pasado mejor IvánZX de ZxDev15 e @ignprigar de pb48k." 0 0
 }
 
 #Mensaje de información al instalar la categoría Mojon Twins
@@ -91,10 +85,34 @@ _msgNoRoot(){
 _msgCreacionCategoria(){
     dialog --infobox "Se ha creado una nueva categoría en Emulationstation ..." 3 60
 }
+
+#Mensaje de finalizacion
+_msgFin(){
+  local descripcion="$1"
+  dialog --title "Trabajo finalizado" \
+  --msgbox "\n Se ha terminado de instalar la categoría $descripcion,
+            \n ahora inicia Emulation Station para disfrutar" 0 0
+}
+
+#Mensaje directorios creados
+_msgActualizarScript(){
+    dialog --infobox "Actualizando script..." 2 60
+}
+
 #-------------------- FIN MENSAJES DE INFORMACIÓN --------------
 #---------------------------------------------------------------
 
 
+
+#-----------------------UTILIDADES ----------------------------
+_actualizarScript(){
+  _msgActualizarScript
+  git pull >> log.txt
+}
+
+
+#-------------------- FIN UTILIDADES ---------------------------
+#---------------------------------------------------------------
 
 
 
@@ -172,6 +190,7 @@ _darPermisos(){
 _borrarTemporales(){
   echo "$(date +%H:%M:%S) - Borramos ficheros temporales" >> log.txt  
   sudo rm /home/pi/tmp/*.*
+  sudo rmdir /home/pi/tmp
 }
 
 #Descarga todos los archivos necesarios para crear la categoría
@@ -253,9 +272,8 @@ _main () {
   dialog --title "RetroPie Scene Script by @ConsolaViejuna" \
            --menu "Por favor, elija una opción:" 15 80 5 \
                    1 "Instalar categoría Enciclopedia Hombrew" \
-                   2 "Instalar categoría The Mojon Twins y sus juegos" \
-		   3 "Instalar categoría Esp Soft y sus juegos" \
-                   4 "Salir" 2> $tempfile3
+                   2 "Actualizar script" \
+                   3 "Salir" 2> $tempfile3
 
    retv=$?
    choice=$(cat $tempfile3)
@@ -263,12 +281,16 @@ _main () {
 
    case $choice in
        1) _enciclopediaHomebrew
+          _main
            ;;
-       2) _mojonTwins
-           ;; 
-       3) _msgEspSoft
-           ;; 
-       4) clear
+       2) _actualizarScript
+          _main
+           ;;
+       # 2) _mojonTwins
+       #    ;; 
+       # 3) _msgEspSoft
+       #    ;; 
+       3) clear
           _salir ;;
 
    esac
@@ -305,7 +327,7 @@ _enciclopediaHomebrew(){
        _modificaCfg homebrew "Enciclopedia Homebrew" 
        _descargaElementos "homebrewSh.uri" 3 "comandos sh"   
        _copiaRoms homebrew sh        
-       #_main
+       _msgFin "Enciclopedia Hombrew"
    else
      _msgTemaNoInstalado
      clear
