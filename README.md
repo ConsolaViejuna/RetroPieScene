@@ -18,6 +18,10 @@ Ejecución:
 Histórico de cambios:
 ---------------------
 
+V 0.2.2
+-------
+ - Se soluciona problema al actualizar el script, ahora se refresca automáticamente
+ 
 V 0.2
 ------
  - Versión incial del es script
