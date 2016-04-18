@@ -107,6 +107,7 @@ _msgActualizarScript(){
 _actualizarScript(){
   _msgActualizarScript
   git pull >> log.txt
+  exec ./RetroPie-scene_setup.sh 
 }
 
 
