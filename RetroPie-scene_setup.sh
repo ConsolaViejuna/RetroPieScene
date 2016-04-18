@@ -90,8 +90,7 @@ _msgCreacionCategoria(){
 _msgFin(){
   local descripcion="$1"
   dialog --title "Trabajo finalizado" \
-  --msgbox "\n Se ha terminado de instalar la categoría $descripcion,
-            \n ahora inicia Emulation Station para disfrutar" 0 0
+  --msgbox "Se ha terminado de instalar la categoría $descripcion, ahora inicia Emulation Station para disfrutar" 0 0
 }
 
 #Mensaje directorios creados
