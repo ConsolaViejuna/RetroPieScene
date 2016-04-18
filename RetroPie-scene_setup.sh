@@ -289,7 +289,6 @@ _main () {
           _main
            ;;
        2)_actualizarScript
-         _main
            ;;
        3) clear
           _salir ;;
