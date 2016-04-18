@@ -12,7 +12,7 @@ trap "rm -f $tempfile1 $tempfile2 $tempfile3" 0 1 2 5 15
 
 #Mensaje de inicio
 _msgInicio(){
-    dialog --infobox "             RetroPie Script Scene v0.2 test
+    dialog --infobox "             RetroPie Script Scene v0.2.1
                       \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
