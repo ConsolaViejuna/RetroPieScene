@@ -12,7 +12,7 @@ trap "rm -f $tempfile1 $tempfile2 $tempfile3" 0 1 2 5 15
 
 #Mensaje de inicio
 _msgInicio(){
-    dialog --infobox "             RetroPie Script Scene v0.2.2
+    dialog --infobox "             RetroPie Script Scene v0.3.0
                       \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
@@ -41,16 +41,7 @@ _msgMojonTwins(){
 #Mensaje de información al instalar la categoría Esp Soft
 _msgEspSoft(){
    dialog --title "Esp Soft" \
-          --msgbox "\n Se va a proceder a instalar la categoría Esp Soft en tu sistema, 
-                    \n se añadirán todos los juegos de este fantástico grupo de
-                    \n desarrolladores.
-                    \n Esp Soft  es un grupo de programadores que se fundó en año 2004
-                    \n todo empezó en los foros al publicar un tutorial para programar
-                    \n juegos en ASM, siguió con la conversión de el famoso juego columns 
-                    \n para Amstrad. En su catalogo podemos encontrar desde estupendos
-                    \n juegos conversacionales a estupendas aventuras.
-                    \n Pásate por http://espsoft.blogspot.com.es y http://www.asmtrad.es
-                    \n y conoce más de cerca sus juegos y su historia" 18 80
+          --msgbox "Se va a proceder a instalar la categoría Esp Soft en tu sistema, se añadirán todos los juegos de este fantástico grupo de desarrolladores. Esp Soft  es un grupo de programadores que se fundó en año 2004, programan juegos para el maravilloso Amstrad CPC. Todo empezó en los foros de Miarroba, al publicar un tutorial para programar juegos en ASM, siguió con la conversión de el famoso juego columns de Sega para Amstrad. En su catalogo podemos encontrar desde estupendos juegos conversacionales a estupendas aventuras. Pásate por http://espsoft.blogspot.com.es y http://www.asmtrad.es y conoce más de cerca sus juegos y su historia" 0 0
 }
 
 #Mensaje indicando que el tema no se ha instalado
@@ -123,19 +114,35 @@ _copiaRoms(){
   local categoria=$1
   local extension=$2
   echo "$(date +%H:%M:%S) - Copiamos los archivos .$extension" >> log.txt  
-  cp /home/pi/tmp/*.$extension /home/pi/RetroPie/roms/$categoria
+  cp ~/tmp/*.$extension ~/RetroPie/roms/$categoria
   echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos .$extension" >> log.txt  
-  chown pi /home/pi/RetroPie/roms/$categoria/*.*
-  chgrp pi /home/pi/RetroPie/roms/$categoria/*.*
+  chown $usuario ~/RetroPie/roms/$categoria
+  chgrp $usuario ~/RetroPie/roms/$categoria
+  chown $usuario ~/RetroPie/roms/$categoria/*.*
+  chgrp $usuario ~/RetroPie/roms/$categoria/*.*
+  _borrarTemporales
+}
 
+#Copia las carátulas de los juegos
+_copiaCovers(){
+  local categoria=$1
+  echo "$(date +%H:%M:%S) - Copiamos las carátulas y el gamelist.xml" >> log.txt  
+  cp ~/tmp/*.jpg ~/.emulationstation/downloaded_images/$categoria
+  cp ~/tmp/*.xml ~/.emulationstation/gamelists/$categoria
+  echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt  
+  chown $usuario ~/.emulationstation/downloaded_images/$categoria
+  chgrp $usuario ~/.emulationstation/downloaded_images/$categoria
+  chown $usuario ~/.emulationstation/downloaded_images/$categoria/*.*
+  chgrp $usuario ~/.emulationstation/downloaded_images/$categoria/*.*
+  chown $usuario ~/.emulationstation/gamelists/$categoria
+  chgrp $usuario ~/.emulationstation/gamelists/$categoria
+  chown $usuario ~/.emulationstation/gamelists/$categoria/*.*
+  chgrp $usuario ~/.emulationstation/gamelists/$categoria/*.*
   _borrarTemporales
 }
 
 #-------------------- FIN AÑADIR ROMS --------------------------
 #---------------------------------------------------------------
-
-
-
 
 #------------ CONFIGURAR TEMA EN EMULATION STATION -------------
 
@@ -160,15 +167,57 @@ _crearDirectorios(){
     echo "$(date +%H:%M:%S) - El directorio /etc/emulationstation/themes/simple/$dir/art ya está creado" >> log.txt 
   fi
   
-  if [ ! -d /home/pi/RetroPie/roms/$dir/ ];
+  if [ ! -d ~/RetroPie/roms/$dir/ ];
   then
     echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/pi/RetroPie/roms/$dir" >> log.txt 
-    mkdir /home/pi/RetroPie/roms/$dir >> log.txt
-    sudo chown pi homebrew/
-    sudo chgrp pi homebrew/
+    mkdir ~/RetroPie/roms/$dir >> log.txt
+    sudo chown $usuario homebrew/
+    sudo chgrp $usuario homebrew/
   else
     echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
   fi
+
+  if [ ! -d ~/.emulationstation/downloaded_images/ ];
+  then
+    echo "$(date +%H:%M:%S) - Se crea directorio downloaded_images en /home/$usuario/.emulationstation" >> log.txt 
+    mkdir ~/.emulationstation/downloaded_images
+    sudo chown $usuario ~/.emulationstation/downloaded_images
+    sudo chgrp $usuario ~/.emulationstation/downloaded_images
+  else
+    echo "$(date +%H:%M:%S) - Ya está creado el directorio downloaded_images en /home/$usuario/.emulationstation" >> log.txt
+  fi
+  
+   if [ ! -d ~/.emulationstation/downloaded_images/$dir/ ];
+    then
+    echo "$(date +%H:%M:%S) - Se crea directorio $dir en ~/.emulationstation/downloaded_images" >> log.txt 
+    mkdir ~/.emulationstation/downloaded_images/$dir
+    sudo chown $usuario ~/.emulationstation/downloaded_images/$dir
+    sudo chgrp $usuario ~/.emulationstation/downloaded_images/$dir
+  else
+    echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
+  fi
+
+   if [ ! -d ~/.emulationstation/gamelists/ ];
+    then
+    echo "$(date +%H:%M:%S) - Se crea directorio gamelist en ~/.emulationstation" >> log.txt 
+    mkdir ~/.emulationstation/gamelists
+    sudo chown $usuario ~/.emulationstation/gamelists
+    sudo chgrp $usuario ~/.emulationstation/gamelists
+  else
+    echo "$(date +%H:%M:%S) - El directorio ~/.emulationstation/gamelists ya está creado" >> log.txt
+  fi
+
+  if [ ! -d ~/.emulationstation/gamelists/$dir/ ];
+    then
+    echo "$(date +%H:%M:%S) - Se crea directorio $dir en ~/.emulationstation/gamelists" >> log.txt 
+    mkdir ~/.emulationstation/gamelists/$dir
+    sudo chown $usuario ~/.emulationstation/gamelists/$dir
+    sudo chgrp $usuario ~/.emulationstation/gamelists/$dir
+  else
+    echo "$(date +%H:%M:%S) - El directorio ~/.emulationstation/gamelists ya está creado" >> log.txt
+  fi
+
+
 }
 
 #Copia los elementos del tema
@@ -176,9 +225,9 @@ _copiaElementosTema(){
   echo "$(date +%H:%M:%S) - Copiamos los elementos del tema" >> log.txt  
   local categoria=$1
   local filename="_art_blur.jpg"
-  cp /home/pi/tmp/$categoria.png /etc/emulationstation/themes/simple/$categoria/art/ 
-  cp /home/pi/tmp/$categoria$filename /etc/emulationstation/themes/simple/$categoria/art 
-  cp /home/pi/tmp/theme.xml /etc/emulationstation/themes/simple/$categoria 
+  cp ~/tmp/$categoria.png /etc/emulationstation/themes/simple/$categoria/art/ 
+  cp ~/tmp/$categoria$filename /etc/emulationstation/themes/simple/$categoria/art 
+  cp ~/tmp/theme.xml /etc/emulationstation/themes/simple/$categoria 
   echo "$(date +%H:%M:%S) - Terminamos de copiar los elementos" >> log.txt  
   _borrarTemporales
 }
@@ -186,16 +235,16 @@ _copiaElementosTema(){
 #Dar permiso a los ficheros descargados
 _darPermisos(){
   echo "$(date +%H:%M:%S) - Damos permisos a los ficheros descargados" >> log.txt  
-  sudo chown pi /home/pi/tmp/*.* 
-  sudo chgrp pi /home/pi/tmp/*.* 
-  sudo chmod 777 /home/pi/tmp/*.*
+  sudo chown $usuario ~/tmp/*.* 
+  sudo chgrp $usuario ~/tmp/*.* 
+  sudo chmod 777 ~/tmp/*.*
 }  
 
 #Borramos fiheros temporales
 _borrarTemporales(){
   echo "$(date +%H:%M:%S) - Borramos ficheros temporales" >> log.txt  
-  sudo rm /home/pi/tmp/*.*
-  sudo rmdir /home/pi/tmp
+  sudo rm ~/tmp/*.*
+  sudo rmdir ~/tmp
 }
 
 #Descarga todos los archivos necesarios para crear la categoría
@@ -205,9 +254,9 @@ _descargaElementos(){
   echo "$(date +%H:%M:%S) - Nos creamos directorio temporal" >> log.txt
   
   #Si el directorio /home/pi/tmp no esta creado, o creamos
-  if [ ! -d /home/pi/tmp/ ];
+  if [ ! -d ~/tmp/ ];
   then   
-    mkdir /home/pi/tmp 
+    mkdir ~/tmp 
   fi
  
   local uri="$1"
@@ -217,7 +266,7 @@ _descargaElementos(){
   (
     while read line
     do 
-      wget -q -N -P /home/pi/tmp  $line >> log.txt
+      wget -q -N -P ~/tmp  $line >> log.txt
       echo $porcentaje
       echo "###"
       echo "$porcentaje %"
@@ -248,7 +297,7 @@ _modificaCfg(){
 CONTENT='         <system>\
             <name>'"$categoria"'</name>\
             <fullname>'"$descripcion"'</fullname>\
-            <path>/home/pi/RetroPie/roms/'"$categoria"'</path>\
+            <path>~/RetroPie/roms/'"$categoria"'</path>\
             <extension>.sh .SH</extension>\
             <command>%ROM%</command>\
             <platform>pc</platform>\
@@ -277,8 +326,9 @@ _main () {
   dialog --title "RetroPie Scene Script by @ConsolaViejuna" \
            --menu "Por favor, elija una opción:" 15 80 5 \
                    1 "Instalar categoría Enciclopedia Hombrew" \
-                   2 "Actualizar script" \
-                   3 "Salir" 2> $tempfile3
+                   2 "Instalar categoría Esp Soft" \
+                   3 "Actualizar script" \
+                   4 "Salir" 2> $tempfile3
 
    retv=$?
    choice=$(cat $tempfile3)
@@ -288,9 +338,13 @@ _main () {
        1) _enciclopediaHomebrew
           _main
            ;;
-       2)_actualizarScript
+       2) _espSoft
+          _main
            ;;
-       3) clear
+       3)_main
+         _actualizarScript
+           ;;
+       4) clear
           _salir ;;
 
    esac
@@ -300,13 +354,13 @@ _main () {
 _salir(){
   
   echo "$(date +%H:%M:%S) - Cambiamos permisos a los ficheros" >> log.txt
-  sudo chown pi:pi log.txt >> log.txt
-  sudo chmod 775 log.txt >> log.txt
+  sudo chown $usuario log.txt 
+  sudo chmod 775 log.txt 
   echo "$(date +%H:%M:%S) - Fin" >> log.txt
   exit
 }
 
-#Instala opción hombrew
+#Instala opción homebrew
 _enciclopediaHomebrew(){
    #Mensaje de información
    _msgEnciclopediaHomebrew
@@ -320,12 +374,12 @@ _enciclopediaHomebrew(){
        #Creamos los directorios necesarios
        _crearDirectorios homebrew
        #Descargamos los elementos necesarios del tema
-       _descargaElementos "homebrewArt.uri" 3 imágenes
+       _descargaElementos "./homebrew/homebrewArt.uri" 3 imágenes
        #Copiamos los elementos
        _copiaElementosTema homebrew
        #Volvemos al menú principal
        _modificaCfg homebrew "Enciclopedia Homebrew" 
-       _descargaElementos "homebrewSh.uri" 3 "comandos sh"   
+       _descargaElementos "./homebrew/homebrewSh.uri" 3 "comandos sh"   
        _copiaRoms homebrew sh        
        _msgFin "Enciclopedia Hombrew"
    else
@@ -334,6 +388,41 @@ _enciclopediaHomebrew(){
      exit  
    fi
 }
+
+#Instala opción Esp Soft
+_espSoft(){
+   #Mensaje de información
+   _msgEspSoft
+ 
+   #Miramos si está instalado el tema simple  
+   if [ -d /etc/emulationstation/themes/simple/ ];
+   then
+       echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
+       _msgTemaSimpleInstalado
+       _msgCreacionDirectorios
+       #Creamos los directorios necesarios
+       _crearDirectorios espsoft
+       #Descargamos los elementos necesarios del tema
+       _descargaElementos "./espsoft/espSoftArt.uri" 3 imágenes
+       #Copiamos los elementos
+       _copiaElementosTema espsoft
+       #Volvemos al menú principal
+       _modificaCfg espsoft "Esp Soft" 
+       #Descargamos roms
+       _descargaElementos "./espsoft/espSoftRoms.uri" 21 "roms"
+       _copiaRoms espsoft dsk 
+       _descargaElementos "./espsoft/espSoftSh.uri" 19 "archivos .sh"  
+       _copiaRoms espsoft sh
+       _descargaElementos "./espsoft/espSoftCover.uri" 19 "carátulas"
+       _copiaCovers espsoft
+       _msgFin "Esp Soft"
+   else
+     _msgTemaNoInstalado
+     clear
+     exit  
+   fi
+}
+
 
 #Instalar opción mojon twins
 _mojonTwins(){
@@ -349,11 +438,16 @@ _mojonTwins(){
 
 #------------------- SCRIPT PRINCIPAL -------------------------------
 #Ejecución de script
+usuario=$1
+if [ -z "$usuario" ]; then
+usuario="pi"
+fi
 if [ "$(whoami)" != "root" ]; then
   _msgNoRoot
   clear
   exit
 else
+ 
   _main
 fi
 
