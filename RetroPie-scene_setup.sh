@@ -297,7 +297,7 @@ _modificaCfg(){
 CONTENT='         <system>\
             <name>'"$categoria"'</name>\
             <fullname>'"$descripcion"'</fullname>\
-            <path>/home/$usuario/RetroPie/roms/'"$categoria"'</path>\
+            <path>/home/'"$usuario"'/RetroPie/roms/'"$categoria"'</path>\
             <extension>.sh .SH</extension>\
             <command>%ROM%</command>\
             <platform>pc</platform>\

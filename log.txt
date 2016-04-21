@@ -1,0 +1,39 @@
+21:10:29 Iniciando script ...
+21:10:31 - El directorio /etc/emulationstation/themes/simple/espsoft ya está creado
+21:10:31 - El directorio /etc/emulationstation/themes/simple/espsoft/art ya está creado
+21:10:31 - El directorio home/pi/RetroPie/roms/espsoft ya está creado
+21:10:31 - Ya está creado el directorio downloaded_images en /home/darkside/.emulationstation
+21:10:31 - El directorio home/pi/RetroPie/roms/espsoft ya está creado
+21:10:31 - El directorio /home/darkside/.emulationstation/gamelists ya está creado
+21:10:31 - El directorio /home/darkside/.emulationstation/gamelists ya está creado
+21:10:31 - Descarga de imágenes para el tema
+21:10:31 - Nos creamos directorio temporal
+21:10:33 - Finalizada la descarga
+21:10:33 - Damos permisos a los ficheros descargados
+21:10:33 - Copiamos los elementos del tema
+21:10:33 - Terminamos de copiar los elementos
+21:10:33 - Borramos ficheros temporales
+21:10:33 - Se ha añadido la categoría con anterioridad
+21:10:33 - Descarga de roms para el tema
+21:10:33 - Nos creamos directorio temporal
+21:10:58 - Finalizada la descarga
+21:10:58 - Damos permisos a los ficheros descargados
+21:10:59 - Copiamos los archivos .dsk
+21:10:59 - Terminamos de copiar los archivos .dsk
+21:10:59 - Borramos ficheros temporales
+21:10:59 - Descarga de archivos .sh para el tema
+21:10:59 - Nos creamos directorio temporal
+21:11:07 - Finalizada la descarga
+21:11:07 - Damos permisos a los ficheros descargados
+21:11:07 - Copiamos los archivos .sh
+21:11:07 - Terminamos de copiar los archivos .sh
+21:11:07 - Borramos ficheros temporales
+21:11:07 - Descarga de carátulas para el tema
+21:11:07 - Nos creamos directorio temporal
+21:11:28 - Finalizada la descarga
+21:11:28 - Damos permisos a los ficheros descargados
+21:11:28 - Copiamos las carátulas y el gamelist.xml
+21:11:28 - Terminamos de copiar los archivos
+21:11:28 - Borramos ficheros temporales
+21:11:35 - Cambiamos permisos a los ficheros
+21:11:35 - Fin
