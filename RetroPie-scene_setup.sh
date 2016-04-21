@@ -413,7 +413,7 @@ _espSoft(){
        _copiaRoms espsoft dsk 
        _descargaElementos "./espsoft/espSoftSh.uri" 19 "archivos .sh"  
        _copiaRoms espsoft sh
-       _descargaElementos "./espsoft/espSoftCover.uri" 19 "carátulas"
+       _descargaElementos "./espsoft/espSoftCover.uri" 20 "carátulas"
        _copiaCovers espsoft
        _msgFin "Esp Soft"
    else
