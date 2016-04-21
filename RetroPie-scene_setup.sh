@@ -341,8 +341,8 @@ _main () {
        2) _espSoft
           _main
            ;;
-       3)_main
-         _actualizarScript
+       3) _actualizarScript
+	  _main	
            ;;
        4) clear
           _salir ;;
