@@ -17,7 +17,7 @@ Ejecución para Raspberry Pi:
 - sudo ./RetroPie-scene_setup.sh
 - Si ya tienes el script descargado entra en el script y actualiza el script (Hay una opción de menú, automáticamente se recarga).
 
-Ejecución el Linux:
+Ejecución en Linux:
 -------------------
 - Deberás de tener instalado RetroPie en Linux, RetroPie debe quedar instalado en el home de la forma ~/RetroPie/
 - Para instalar en Linux: https://github.com/retropie/retropie-setup/wiki/RetroPie-Ubuntu-15.10-x86-Flavor
@@ -30,7 +30,7 @@ Ejecución el Linux:
 Histórico de cambios:
 ---------------------
 
-v 0.2.3
+v 0.3.0
 --------
  - Se añade categoría Esp Soft con sus juegos y su descripción.
  - Se habilita el script para instalar en linux.
