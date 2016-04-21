@@ -12,7 +12,7 @@ trap "rm -f $tempfile1 $tempfile2 $tempfile3" 0 1 2 5 15
 
 #Mensaje de inicio
 _msgInicio(){
-    dialog --infobox "             RetroPie Script Scene v0.3.0
+    dialog --infobox "             RetroPie Script Scene v0.3.1
                       \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
@@ -114,12 +114,12 @@ _copiaRoms(){
   local categoria=$1
   local extension=$2
   echo "$(date +%H:%M:%S) - Copiamos los archivos .$extension" >> log.txt  
-  cp ~/tmp/*.$extension ~/RetroPie/roms/$categoria
+  cp /home/$usuario/tmp/*.$extension /home/$usuario/RetroPie/roms/$categoria
   echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos .$extension" >> log.txt  
-  chown $usuario ~/RetroPie/roms/$categoria
-  chgrp $usuario ~/RetroPie/roms/$categoria
-  chown $usuario ~/RetroPie/roms/$categoria/*.*
-  chgrp $usuario ~/RetroPie/roms/$categoria/*.*
+  chown $usuario /home/$usuario/RetroPie/roms/$categoria
+  chgrp $usuario /home/$usuario/RetroPie/roms/$categoria
+  chown $usuario /home/$usuario/RetroPie/roms/$categoria/*.*
+  chgrp $usuario /home/$usuario/RetroPie/roms/$categoria/*.*
   _borrarTemporales
 }
 
@@ -127,17 +127,17 @@ _copiaRoms(){
 _copiaCovers(){
   local categoria=$1
   echo "$(date +%H:%M:%S) - Copiamos las carátulas y el gamelist.xml" >> log.txt  
-  cp ~/tmp/*.jpg ~/.emulationstation/downloaded_images/$categoria
-  cp ~/tmp/*.xml ~/.emulationstation/gamelists/$categoria
+  cp /home/$usuario/tmp/*.jpg /home/$usuario/.emulationstation/downloaded_images/$categoria
+  cp /home/$usuario/tmp/*.xml /home/$usuario/.emulationstation/gamelists/$categoria
   echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt  
-  chown $usuario ~/.emulationstation/downloaded_images/$categoria
-  chgrp $usuario ~/.emulationstation/downloaded_images/$categoria
-  chown $usuario ~/.emulationstation/downloaded_images/$categoria/*.*
-  chgrp $usuario ~/.emulationstation/downloaded_images/$categoria/*.*
-  chown $usuario ~/.emulationstation/gamelists/$categoria
-  chgrp $usuario ~/.emulationstation/gamelists/$categoria
-  chown $usuario ~/.emulationstation/gamelists/$categoria/*.*
-  chgrp $usuario ~/.emulationstation/gamelists/$categoria/*.*
+  chown $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria
+  chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria
+  chown $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria/*.*
+  chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria/*.*
+  chown $usuario /home/$usuario/.emulationstation/gamelists/$categoria
+  chgrp $usuario /home/$usuario/.emulationstation/gamelists/$categoria
+  chown $usuario /home/$usuario/.emulationstation/gamelists/$categoria/*.*
+  chgrp $usuario /home/$usuario/.emulationstation/gamelists/$categoria/*.*
   _borrarTemporales
 }
 
@@ -167,54 +167,54 @@ _crearDirectorios(){
     echo "$(date +%H:%M:%S) - El directorio /etc/emulationstation/themes/simple/$dir/art ya está creado" >> log.txt 
   fi
   
-  if [ ! -d ~/RetroPie/roms/$dir/ ];
+  if [ ! -d /home/$usuario/RetroPie/roms/$dir/ ];
   then
     echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/pi/RetroPie/roms/$dir" >> log.txt 
-    mkdir ~/RetroPie/roms/$dir >> log.txt
+    mkdir "/home/$usuario/RetroPie/roms/$dir" >> log.txt
     sudo chown $usuario homebrew/
     sudo chgrp $usuario homebrew/
   else
     echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
   fi
 
-  if [ ! -d ~/.emulationstation/downloaded_images/ ];
+  if [ ! -d /home/$usuario/.emulationstation/downloaded_images/ ];
   then
     echo "$(date +%H:%M:%S) - Se crea directorio downloaded_images en /home/$usuario/.emulationstation" >> log.txt 
-    mkdir ~/.emulationstation/downloaded_images
-    sudo chown $usuario ~/.emulationstation/downloaded_images
-    sudo chgrp $usuario ~/.emulationstation/downloaded_images
+    mkdir /home/$usuario/.emulationstation/downloaded_images
+    sudo chown $usuario /home/$usuario/.emulationstation/downloaded_images
+    sudo chgrp $usuario /home/$usuario/.emulationstation/downloaded_images
   else
     echo "$(date +%H:%M:%S) - Ya está creado el directorio downloaded_images en /home/$usuario/.emulationstation" >> log.txt
   fi
   
-   if [ ! -d ~/.emulationstation/downloaded_images/$dir/ ];
+   if [ ! -d /home/$usuario/.emulationstation/downloaded_images/$dir/ ];
     then
-    echo "$(date +%H:%M:%S) - Se crea directorio $dir en ~/.emulationstation/downloaded_images" >> log.txt 
-    mkdir ~/.emulationstation/downloaded_images/$dir
-    sudo chown $usuario ~/.emulationstation/downloaded_images/$dir
-    sudo chgrp $usuario ~/.emulationstation/downloaded_images/$dir
+    echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/$usuario/.emulationstation/downloaded_images" >> log.txt 
+    mkdir /home/$usuario/.emulationstation/downloaded_images/$dir
+    sudo chown $usuario /home/$usuario/.emulationstation/downloaded_images/$dir
+    sudo chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$dir
   else
     echo "$(date +%H:%M:%S) - El directorio home/pi/RetroPie/roms/$dir ya está creado" >> log.txt
   fi
 
-   if [ ! -d ~/.emulationstation/gamelists/ ];
+   if [ ! -d /home/$usuario/.emulationstation/gamelists/ ];
     then
-    echo "$(date +%H:%M:%S) - Se crea directorio gamelist en ~/.emulationstation" >> log.txt 
-    mkdir ~/.emulationstation/gamelists
-    sudo chown $usuario ~/.emulationstation/gamelists
-    sudo chgrp $usuario ~/.emulationstation/gamelists
+    echo "$(date +%H:%M:%S) - Se crea directorio gamelist en /home/$usuario/.emulationstation" >> log.txt 
+    mkdir /home/$usuario/.emulationstation/gamelists
+    sudo chown $usuario /home/$usuario/.emulationstation/gamelists
+    sudo chgrp $usuario /home/$usuario/.emulationstation/gamelists
   else
-    echo "$(date +%H:%M:%S) - El directorio ~/.emulationstation/gamelists ya está creado" >> log.txt
+    echo "$(date +%H:%M:%S) - El directorio /home/$usuario/.emulationstation/gamelists ya está creado" >> log.txt
   fi
 
-  if [ ! -d ~/.emulationstation/gamelists/$dir/ ];
+  if [ ! -d /home/$usuario/.emulationstation/gamelists/$dir/ ];
     then
-    echo "$(date +%H:%M:%S) - Se crea directorio $dir en ~/.emulationstation/gamelists" >> log.txt 
-    mkdir ~/.emulationstation/gamelists/$dir
-    sudo chown $usuario ~/.emulationstation/gamelists/$dir
-    sudo chgrp $usuario ~/.emulationstation/gamelists/$dir
+    echo "$(date +%H:%M:%S) - Se crea directorio $dir en /home/$usuario/.emulationstation/gamelists" >> log.txt 
+    mkdir /home/$usuario/.emulationstation/gamelists/$dir
+    sudo chown $usuario /home/$usuario/.emulationstation/gamelists/$dir
+    sudo chgrp $usuario /home/$usuario/.emulationstation/gamelists/$dir
   else
-    echo "$(date +%H:%M:%S) - El directorio ~/.emulationstation/gamelists ya está creado" >> log.txt
+    echo "$(date +%H:%M:%S) - El directorio /home/$usuario/.emulationstation/gamelists ya está creado" >> log.txt
   fi
 
 
@@ -225,9 +225,9 @@ _copiaElementosTema(){
   echo "$(date +%H:%M:%S) - Copiamos los elementos del tema" >> log.txt  
   local categoria=$1
   local filename="_art_blur.jpg"
-  cp ~/tmp/$categoria.png /etc/emulationstation/themes/simple/$categoria/art/ 
-  cp ~/tmp/$categoria$filename /etc/emulationstation/themes/simple/$categoria/art 
-  cp ~/tmp/theme.xml /etc/emulationstation/themes/simple/$categoria 
+  cp /home/$usuario/tmp/$categoria.png /etc/emulationstation/themes/simple/$categoria/art/ 
+  cp /home/$usuario/tmp/$categoria$filename /etc/emulationstation/themes/simple/$categoria/art 
+  cp /home/$usuario/tmp/theme.xml /etc/emulationstation/themes/simple/$categoria 
   echo "$(date +%H:%M:%S) - Terminamos de copiar los elementos" >> log.txt  
   _borrarTemporales
 }
@@ -235,16 +235,16 @@ _copiaElementosTema(){
 #Dar permiso a los ficheros descargados
 _darPermisos(){
   echo "$(date +%H:%M:%S) - Damos permisos a los ficheros descargados" >> log.txt  
-  sudo chown $usuario ~/tmp/*.* 
-  sudo chgrp $usuario ~/tmp/*.* 
-  sudo chmod 777 ~/tmp/*.*
+  sudo chown $usuario /home/$usuario/tmp/*.* 
+  sudo chgrp $usuario /home/$usuario/tmp/*.* 
+  sudo chmod 777 /home/$usuario/tmp/*.*
 }  
 
 #Borramos fiheros temporales
 _borrarTemporales(){
   echo "$(date +%H:%M:%S) - Borramos ficheros temporales" >> log.txt  
-  sudo rm ~/tmp/*.*
-  sudo rmdir ~/tmp
+  sudo rm /home/$usuario/tmp/*.*
+  sudo rmdir /home/$usuario/tmp
 }
 
 #Descarga todos los archivos necesarios para crear la categoría
@@ -254,9 +254,9 @@ _descargaElementos(){
   echo "$(date +%H:%M:%S) - Nos creamos directorio temporal" >> log.txt
   
   #Si el directorio /home/pi/tmp no esta creado, o creamos
-  if [ ! -d ~/tmp/ ];
+  if [ ! -d /home/$usuario/tmp/ ];
   then   
-    mkdir ~/tmp 
+    mkdir /home/$usuario/tmp 
   fi
  
   local uri="$1"
@@ -266,7 +266,7 @@ _descargaElementos(){
   (
     while read line
     do 
-      wget -q -N -P ~/tmp  $line >> log.txt
+      wget -q -N -P /home/$usuario/tmp  $line >> log.txt
       echo $porcentaje
       echo "###"
       echo "$porcentaje %"
@@ -297,7 +297,7 @@ _modificaCfg(){
 CONTENT='         <system>\
             <name>'"$categoria"'</name>\
             <fullname>'"$descripcion"'</fullname>\
-            <path>~/RetroPie/roms/'"$categoria"'</path>\
+            <path>/home/$usuario/RetroPie/roms/'"$categoria"'</path>\
             <extension>.sh .SH</extension>\
             <command>%ROM%</command>\
             <platform>pc</platform>\

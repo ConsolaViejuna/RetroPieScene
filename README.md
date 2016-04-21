@@ -30,6 +30,10 @@ Ejecución en Linux:
 Histórico de cambios:
 ---------------------
 
+v 0.3.1
+--------
+ - Se soluciona problema con el home en debian
+
 v 0.3.0
 --------
  - Se añade categoría Esp Soft con sus juegos y su descripción.
