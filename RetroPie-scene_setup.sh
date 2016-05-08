@@ -128,25 +128,25 @@ _mojonTwins(){
    if [ -d /etc/emulationstation/themes/simple/ ];
    then
        echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
-       #_msgTemaSimpleInstalado
-       #_msgCreacionDirectorios
+       _msgTemaSimpleInstalado
+       _msgCreacionDirectorios
        #Creamos los directorios necesarios
-       #_crearDirectorios mojontwins
+       _crearDirectorios mojontwins
        #Descargamos los elementos necesarios del tema
-       #_descargaElementos "./mojontwins/mojonTwinsArt.uri" 3 imágenes
+       _descargaElementos "./mojontwins/mojonTwinsArt.uri" 3 imágenes
        #Copiamos los elementos
-       #_copiaElementosTema mojontwins
+       _copiaElementosTema mojontwins
        #Volvemos al menú principal
-       #_modificaCfg mojontwins "The Mojon Twins" 
+       _modificaCfg mojontwins "The Mojon Twins" 
        #Descargamos roms
-       #_descargaElementos "./mojontwins/mojonTwinsRoms.uri" 71 "roms"
-       #_copiaRoms mojontwins * 
-       #_descargaElementos "./mojontwins/mojonTwinsSh.uri" 69 "archivos .sh"  
-       #_copiaRoms mojontwins sh
-       #_descargaElementos "./mojontwins/mojonTwinsCover.uri" 55 "carátulas"
-       #_copiaCovers mojontwins
+       _descargaElementos "./mojontwins/mojonTwinsRoms.uri" 71 "roms"
+       _copiaRoms mojontwins * 
+       _descargaElementos "./mojontwins/mojonTwinsSh.uri" 69 "archivos .sh"  
+       _copiaRoms mojontwins sh
+       _descargaElementos "./mojontwins/mojonTwinsCover.uri" 55 "carátulas"
+       _copiaCovers mojontwins
        _descomprimeZip "lala" "mojontwins"
-       #_msgFin "The Mojon Twins"
+       _msgFin "The Mojon Twins"
    else
      _msgTemaNoInstalado
      clear
