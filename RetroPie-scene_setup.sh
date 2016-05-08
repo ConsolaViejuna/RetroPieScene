@@ -63,7 +63,7 @@ _enciclopediaHomebrew(){
    #Miramos si está instalado el tema simple  
    if [ -d /etc/emulationstation/themes/simple/ ];
    then
-       echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
+       echo "$(date +%H:%M:%S) Iniciando script ..." > log.txt
        _msgTemaSimpleInstalado
        _msgCreacionDirectorios
        #Creamos los directorios necesarios
@@ -125,32 +125,33 @@ _mojonTwins(){
    _msgMojonTwins
  
    #Miramos si está instalado el tema simple  
-   #if [ -d /etc/emulationstation/themes/simple/ ];
-   #then
-   #    echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
+   if [ -d /etc/emulationstation/themes/simple/ ];
+   then
+       echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
        #_msgTemaSimpleInstalado
        #_msgCreacionDirectorios
        #Creamos los directorios necesarios
-       _crearDirectorios mojonTwins
+       #_crearDirectorios mojontwins
        #Descargamos los elementos necesarios del tema
-       #_descargaElementos "./espsoft/espSoftArt.uri" 3 imágenes
+       #_descargaElementos "./mojontwins/mojonTwinsArt.uri" 3 imágenes
        #Copiamos los elementos
-       #_copiaElementosTema espsoft
+       #_copiaElementosTema mojontwins
        #Volvemos al menú principal
-       #_modificaCfg espsoft "Esp Soft" 
+       #_modificaCfg mojontwins "The Mojon Twins" 
        #Descargamos roms
-       #_descargaElementos "./espsoft/espSoftRoms.uri" 21 "roms"
-       #_copiaRoms espsoft dsk 
-       #_descargaElementos "./espsoft/espSoftSh.uri" 19 "archivos .sh"  
-       #_copiaRoms espsoft sh
-       #_descargaElementos "./espsoft/espSoftCover.uri" 20 "carátulas"
-       #_copiaCovers espsoft
-       #_msgFin "Esp Soft"
-   #else
-   #  _msgTemaNoInstalado
-   #  clear
-   #  exit  
-   #fi
+       #_descargaElementos "./mojontwins/mojonTwinsRoms.uri" 71 "roms"
+       #_copiaRoms mojontwins * 
+       #_descargaElementos "./mojontwins/mojonTwinsSh.uri" 69 "archivos .sh"  
+       #_copiaRoms mojontwins sh
+       #_descargaElementos "./mojontwins/mojonTwinsCover.uri" 55 "carátulas"
+       #_copiaCovers mojontwins
+       _descomprimeZip "lala" "mojontwins"
+       #_msgFin "The Mojon Twins"
+   else
+     _msgTemaNoInstalado
+     clear
+     exit  
+   fi
 }
 
 

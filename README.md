@@ -30,6 +30,12 @@ Ejecución en Linux:
 Histórico de cambios:
 ---------------------
 
+v 0.3.2
+--------
+ - Se guarda un archivo de log más exhaustivo
+ - Se crear un nuevo fichero de log cada vez que se inicia el script
+ - Se crea un fichero con las funciones necesarias para el script, haciendo más legible el script pincipal
+
 v 0.3.1
 --------
  - Se soluciona problema con el home en debian
