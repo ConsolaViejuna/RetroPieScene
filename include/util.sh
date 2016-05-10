@@ -11,6 +11,8 @@
    local nombre=$1
    local categoria=$2
    unzip -o -d /home/$usuario/RetroPie/roms/$categoria/ /home/$usuario/RetroPie/roms/$categoria/$nombre.zip  >> log.txt 2>&1
+   chgrp -R $usuario /home/$usuario/RetroPie/roms/$categoria/$nombre
+   chown -R $usuario /home/$usuario/RetroPie/roms/$categoria/$nombre
    rm /home/$usuario/RetroPie/roms/$categoria/$nombre.zip >> log.txt 2>&1 
  }
 

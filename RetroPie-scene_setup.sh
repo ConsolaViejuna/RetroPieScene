@@ -137,7 +137,7 @@ _mojonTwins(){
        #Copiamos los elementos
        _copiaElementosTema mojontwins
        #Volvemos al menú principal
-       _modificaCfg mojontwins "The Mojon Twins" 
+       #_modificaCfg mojontwins "The Mojon Twins" 
        #Descargamos roms
        _descargaElementos "./mojontwins/mojonTwinsRoms.uri" 71 "roms"
        _copiaRoms mojontwins * 
