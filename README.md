@@ -30,6 +30,14 @@ Ejecución en Linux:
 Histórico de cambios:
 ---------------------
 
+v 0.4.0
+--------
+ - Se añade los juegos de The Mojon Twins.
+ - Se modifica el log para que guarde los errores que se producen.
+ - Se guarda un fichero con el estado de las descargas.
+ - Se reorganizan los ficheros para que esté más claro el script (por si quieres investigar).
+ - Se usa runcommand.sh en Commodore 64, en futuras versiones se extenderá a todas las versiones.
+
 v 0.3.2
 --------
  - Se guarda un archivo de log más exhaustivo
