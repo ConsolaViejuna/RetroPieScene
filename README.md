@@ -30,6 +30,10 @@ Ejecución en Linux:
 Histórico de cambios:
 ---------------------
 
+v 0.4.1
+--------
+ - Se añade los juegos Yun de The Mojon Twins (juego realizado para la bitbitjam3)
+ 
 v 0.4.0
 --------
  - Se añade los juegos de The Mojon Twins.

@@ -139,11 +139,11 @@ _mojonTwins(){
        #Volvemos al menú principal
        _modificaCfg mojontwins "The Mojon Twins" 
        #Descargamos roms
-       _descargaElementos "./mojontwins/mojonTwinsRoms.uri" 71 "roms"
+       _descargaElementos "./mojontwins/mojonTwinsRoms.uri" 72 "roms"
        _copiaRoms mojontwins * 
-       _descargaElementos "./mojontwins/mojonTwinsSh.uri" 69 "archivos .sh"  
+       _descargaElementos "./mojontwins/mojonTwinsSh.uri" 70 "archivos .sh"  
        _copiaRoms mojontwins sh
-       _descargaElementos "./mojontwins/mojonTwinsCover.uri" 55 "carátulas"
+       _descargaElementos "./mojontwins/mojonTwinsCover.uri" 56 "carátulas"
        _copiaCovers mojontwins
        _descomprimeZip "lala" "mojontwins"
        _msgFin "The Mojon Twins"
