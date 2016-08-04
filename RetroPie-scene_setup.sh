@@ -20,8 +20,9 @@ _main () {
                    1 "Instalar categoría Enciclopedia Hombrew" \
                    2 "Instalar categoría Esp Soft" \
                    3 "Instalar categoría The Mojon Twins" \
-                   4 "Actualizar script" \
-                   5 "Salir" 2> $tempfile3
+                   4 "Instalar categoría Errazking"
+                   5 "Actualizar script" \
+                   6 "Salir" 2> $tempfile3
 
    retv=$?
    choice=$(cat $tempfile3)
@@ -36,10 +37,12 @@ _main () {
            ;;
        3) _mojonTwins
            ;;
-       4) _actualizarScript
+       4) _errazking
+       	   ;;
+       5) _actualizarScript
 	  _main	
            ;;
-       5) clear
+       6) clear
           _salir ;;
 
    esac
@@ -139,14 +142,48 @@ _mojonTwins(){
        #Volvemos al menú principal
        _modificaCfg mojontwins "The Mojon Twins" 
        #Descargamos roms
-       _descargaElementos "./mojontwins/mojonTwinsRoms.uri" 71 "roms"
+       _descargaElementos "./mojontwins/mojonTwinsRoms.uri" 72 "roms"
        _copiaRoms mojontwins * 
-       _descargaElementos "./mojontwins/mojonTwinsSh.uri" 69 "archivos .sh"  
+       _descargaElementos "./mojontwins/mojonTwinsSh.uri" 70 "archivos .sh"  
        _copiaRoms mojontwins sh
-       _descargaElementos "./mojontwins/mojonTwinsCover.uri" 55 "carátulas"
+       _descargaElementos "./mojontwins/mojonTwinsCover.uri" 56 "carátulas"
        _copiaCovers mojontwins
        _descomprimeZip "lala" "mojontwins"
        _msgFin "The Mojon Twins"
+   else
+     _msgTemaNoInstalado
+     clear
+     exit  
+   fi
+}
+
+#Instala opción Errazking
+_errazking(){
+   #Mensaje de información
+   _msgErrazking
+ 
+   #Miramos si está instalado el tema simple  
+   if [ -d /etc/emulationstation/themes/simple/ ];
+   then
+       echo "$(date +%H:%M:%S) Iniciando script ..." >> log.txt
+       _msgTemaSimpleInstalado
+       _msgCreacionDirectorios
+       #Creamos los directorios necesarios
+       _crearDirectorios errazking
+       #Descargamos los elementos necesarios del tema
+       _descargaElementos "./errazking/errazkingArt.uri" 3 imágenes
+       #Copiamos los elementos
+       _copiaElementosTema errazking
+       #Volvemos al menú principal
+       _modificaCfg errazking "Errazking" 
+       #Descargamos roms
+       _descargaElementos "./errazking/errazkingRoms.uri" 6 "roms"
+       _copiaRoms mojontwins * 
+       _descargaElementos "./errazking/errazkingSh.uri" 6 "archivos .sh"  
+       _copiaRoms mojontwins sh
+       _descargaElementos "./errazking/errazkingCover.uri" 6 "carátulas"
+       _copiaCovers errazking
+       _msgFin "Errazking"
    else
      _msgTemaNoInstalado
      clear

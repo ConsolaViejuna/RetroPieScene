@@ -6,7 +6,7 @@
 
 #Mensaje de inicio
 _msgInicio(){
-    dialog --infobox "             RetroPie Script Scene v0.3.1
+    dialog --infobox "             RetroPie Script Scene v0.4.1
                       \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
@@ -36,6 +36,12 @@ _msgMojonTwins(){
 _msgEspSoft(){
    dialog --title "Esp Soft" \
           --msgbox "Se va a proceder a instalar la categoría Esp Soft en tu sistema, se añadirán todos los juegos de este fantástico grupo de desarrolladores. Esp Soft  es un grupo de programadores que se fundó en año 2004, programan juegos para el maravilloso Amstrad CPC. Todo empezó en los foros de Miarroba, al publicar un tutorial para programar juegos en ASM, siguió con la conversión de el famoso juego columns de Sega para Amstrad. En su catalogo podemos encontrar desde estupendos juegos conversacionales a estupendas aventuras. Pásate por http://espsoft.blogspot.com.es y http://www.asmtrad.es y conoce más de cerca sus juegos y su historia" 0 0
+}
+
+#Mensaje de información al instalar la categoría Esp Soft
+_msgErrazking(){
+   dialog --title "Esp Soft" \
+          --msgbox "Se va a proceder a instalar la categoría Errazking en tu sistema, se añadirán todos los juegos de este fantástico desarrolador. Su heramienta preferia el el SEUCK, un software para hacer juegos en Commodore 64, lo maneja cómo nadie, y su arte haciendo sprites no tiene precio. Entre sus juegos podemos encontrar desde pinballs, arcades, juegos de deportes y de lucha. Tiene un canal de Yotube Muchos de ellos son homenajes a los deportes de su zona y a sus juegso favoritosEsp Soft  es un grupo de programadores que se fundó en año 2004, programan juegos para el maravilloso Amstrad CPC. Todo empezó en los foros de Miarroba, al publicar un tutorial para programar juegos en ASM, siguió con la conversión de el famoso juego columns de Sega para Amstrad. En su catalogo podemos encontrar desde estupendos juegos conversacionales a estupendas aventuras. Pásate por http://espsoft.blogspot.com.es y http://www.asmtrad.es y conoce más de cerca sus juegos y su historia" 0 0
 }
 
 #Mensaje indicando que el tema no se ha instalado
