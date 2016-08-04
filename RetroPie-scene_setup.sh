@@ -20,7 +20,7 @@ _main () {
                    1 "Instalar categoría Enciclopedia Hombrew" \
                    2 "Instalar categoría Esp Soft" \
                    3 "Instalar categoría The Mojon Twins" \
-                   4 "Instalar categoría Errazking"
+                   4 "Instalar categoría Errazking" \
                    5 "Actualizar script" \
                    6 "Salir" 2> $tempfile3
 
@@ -39,7 +39,7 @@ _main () {
            ;;
        4) _errazking
        	   ;;
-       5) _actualizarScript
+       5) _actualizarScrdipt
 	  _main	
            ;;
        6) clear
@@ -177,12 +177,12 @@ _errazking(){
        #Volvemos al menú principal
        _modificaCfg errazking "Errazking" 
        #Descargamos roms
-       _descargaElementos "./errazking/errazkingRoms.uri" 6 "roms"
-       _copiaRoms mojontwins * 
-       _descargaElementos "./errazking/errazkingSh.uri" 6 "archivos .sh"  
-       _copiaRoms mojontwins sh
-       _descargaElementos "./errazking/errazkingCover.uri" 6 "carátulas"
-       _copiaCovers errazking
+       _descargaZip "./errazking/errazkingRoms.uri" "roms"
+       _copiaRomsZip "errazking"
+       #_descargaElementos "./errazking/errazkingSh.uri" 6 "archivos .sh"  
+       #_copiaRoms mojontwins sh
+       #_descargaElementos "./errazking/errazkingCover.uri" 6 "carátulas"
+       #_copiaCovers errazking
        _msgFin "Errazking"
    else
      _msgTemaNoInstalado
