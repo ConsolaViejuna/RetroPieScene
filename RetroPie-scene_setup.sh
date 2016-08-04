@@ -104,11 +104,11 @@ _espSoft(){
        #Volvemos al menú principal
        _modificaCfg espsoft "Esp Soft" 
        #Descargamos roms
-       _descargaElementos "./espsoft/espSoftRoms.uri" 21 "roms"
+       _descargaElementos "./espsoft/espSoftRoms.uri" 22 "roms"
        _copiaRoms espsoft dsk 
-       _descargaElementos "./espsoft/espSoftSh.uri" 19 "archivos .sh"  
+       _descargaElementos "./espsoft/espSoftSh.uri" 20 "archivos .sh"  
        _copiaRoms espsoft sh
-       _descargaElementos "./espsoft/espSoftCover.uri" 20 "carátulas"
+       _descargaElementos "./espsoft/espSoftCover.uri" 21 "carátulas"
        _copiaCovers espsoft
        _msgFin "Esp Soft"
    else

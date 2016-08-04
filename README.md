@@ -30,6 +30,10 @@ Ejecución en Linux:
 Histórico de cambios:
 ---------------------
 
+v 0.4.2
+--------
+ - Se añade aventura conversacional Cero Absoluto de Esp Soft
+
 v 0.4.1
 --------
  - Se añade los juegos Yun de The Mojon Twins (juego realizado para la bitbitjam3)
