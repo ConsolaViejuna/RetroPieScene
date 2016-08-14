@@ -39,7 +39,7 @@ _main () {
            ;;
        4) _errazking
        	   ;;
-       5) _actualizarScrdipt
+       5) _actualizarScript
 	  _main	
            ;;
        6) clear
