@@ -29,6 +29,10 @@ Ejecución en Linux:
 
 Histórico de cambios:
 ---------------------
+v 0.5.0
+--------
+ - Se añade los juegos de Errazking.
+ - Ahora se descarga un zip con las roms y la carátulas.
 
 v 0.4.1
 --------

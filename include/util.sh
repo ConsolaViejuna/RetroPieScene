@@ -68,6 +68,25 @@ _copiaCovers(){
   _borrarTemporales
 }
 
+#Copia las carátulas de los juegos que están en zip
+_copiaCoversZip(){
+  local categoria=$1
+  echo "$(date +%H:%M:%S) - Copiamos las carátulas y el gamelist.xml" >> log.txt
+  unzip -q -o /home/$usuario/tmp/covers.zip -d /home/$usuario/tmp  
+  cp /home/$usuario/tmp/*.jpg /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
+  cp /home/$usuario/tmp/*.xml /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
+  echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt  
+  chown $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
+  chown $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria/*.* >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria/*.* >> log.txt 2>&1
+  chown $usuario /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
+  chown $usuario /home/$usuario/.emulationstation/gamelists/$categoria/*.* >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/gamelists/$categoria/*.* >> log.txt 2>&1
+  _borrarTemporales
+}
+
 #Dar permiso a los ficheros descargados
 _darPermisos(){
   echo "$(date +%H:%M:%S) - Damos permisos a los ficheros descargados" >> log.txt  

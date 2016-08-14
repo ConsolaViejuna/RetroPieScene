@@ -176,13 +176,11 @@ _errazking(){
        _copiaElementosTema errazking
        #Volvemos al menú principal
        _modificaCfg errazking "Errazking" 
-       #Descargamos roms
+       #Descargamos roms y archivos sh
        _descargaZip "./errazking/errazkingRoms.uri" "roms"
        _copiaRomsZip "errazking"
-       #_descargaElementos "./errazking/errazkingSh.uri" 6 "archivos .sh"  
-       #_copiaRoms mojontwins sh
-       #_descargaElementos "./errazking/errazkingCover.uri" 6 "carátulas"
-       #_copiaCovers errazking
+       _descargaZip "./errazking/errazkingCover.uri" "carátulas"
+       _copiaCoversZip "errazking"
        _msgFin "Errazking"
    else
      _msgTemaNoInstalado
