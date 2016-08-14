@@ -29,6 +29,22 @@ Ejecución en Linux:
 
 Histórico de cambios:
 ---------------------
+v 0.5.0
+--------
+ - Se añade los juegos de Errazking.
+ - Ahora se descarga un zip con las roms y la carátulas.
+
+v 0.4.1
+--------
+ - Se añade los juegos Yun de The Mojon Twins (juego realizado para la bitbitjam3)
+ 
+v 0.4.0
+--------
+ - Se añade los juegos de The Mojon Twins.
+ - Se modifica el log para que guarde los errores que se producen.
+ - Se guarda un fichero con el estado de las descargas.
+ - Se reorganizan los ficheros para que esté más claro el script (por si quieres investigar).
+ - Se usa runcommand.sh en Commodore 64, en futuras versiones se extenderá a todas las versiones.
 
 v 0.4.2
 --------

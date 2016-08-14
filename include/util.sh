@@ -36,10 +36,43 @@ _copiaRoms(){
   _borrarTemporales
 }
 
+#Copia las roms y los archivos .sh de un archivo zip
+_copiaRomsZip(){
+  local categoria=$1
+  echo "$(date +%H:%M:%S) - Copiamos los archivos" >> log.txt  
+  unzip -q -o /home/$usuario/tmp/roms.zip -d /home/$usuario/tmp
+  cp /home/$usuario/tmp/*.* /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
+  echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt 2>&1
+  chown $usuario /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
+  chown $usuario /home/$usuario/RetroPie/roms/$categoria/*.* >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/RetroPie/roms/$categoria/*.* >> log.txt 2>&1
+  _borrarTemporales
+}
+
 #Copia las carátulas de los juegos
 _copiaCovers(){
   local categoria=$1
   echo "$(date +%H:%M:%S) - Copiamos las carátulas y el gamelist.xml" >> log.txt  
+  cp /home/$usuario/tmp/*.jpg /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
+  cp /home/$usuario/tmp/*.xml /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
+  echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt  
+  chown $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
+  chown $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria/*.* >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/downloaded_images/$categoria/*.* >> log.txt 2>&1
+  chown $usuario /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
+  chown $usuario /home/$usuario/.emulationstation/gamelists/$categoria/*.* >> log.txt 2>&1
+  chgrp $usuario /home/$usuario/.emulationstation/gamelists/$categoria/*.* >> log.txt 2>&1
+  _borrarTemporales
+}
+
+#Copia las carátulas de los juegos que están en zip
+_copiaCoversZip(){
+  local categoria=$1
+  echo "$(date +%H:%M:%S) - Copiamos las carátulas y el gamelist.xml" >> log.txt
+  unzip -q -o /home/$usuario/tmp/covers.zip -d /home/$usuario/tmp  
   cp /home/$usuario/tmp/*.jpg /home/$usuario/.emulationstation/downloaded_images/$categoria >> log.txt 2>&1
   cp /home/$usuario/tmp/*.xml /home/$usuario/.emulationstation/gamelists/$categoria >> log.txt 2>&1
   echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt  
@@ -190,6 +223,27 @@ _descargaElementos(){
   echo " " >> log.txt
   echo "$(date +%H:%M:%S) - Finalizada la descarga" >> log.txt
   _darPermisos
+}
+
+#Descarga todos los archivos necesarios para creas la categoría (usando un archivo zip)
+_descargaZip(){
+  local elemento="$2"
+  echo "$(date +%H:%M:%S) - Descarga de $elemento para el tema" >> log.txt  
+  echo "$(date +%H:%M:%S) - Nos creamos directorio temporal" >> log.txt
+  echo "---------------------- DESCARGA ---------------------" >> log.txt
+  echo " " >> log.txt
+  
+  #Si el directorio /home/pi/tmp no esta creado, o creamos
+  if [ ! -d /home/$usuario/tmp/ ];
+  then   
+    mkdir /home/$usuario/tmp >> log.txt 2>&1 
+  fi
+  #Leemos fichero de recursos
+  while read line
+  do     
+      local uri=$line
+  done < "$1"
+  wget -a download.txt -N -P /home/$usuario/tmp --progress=dot "$uri" 2>&1 |  grep "%" | sed -u -e "s,\.,,g" | awk '{print $2}' | sed -u -e "s,\%,,g" | dialog --title "Descargando $elemento" --gauge "Por favor espere ...." 10 60 0
 }
 
 #Añade una nueva categoría a emulation Station
