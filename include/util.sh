@@ -243,7 +243,7 @@ _descargaZip(){
   do     
       local uri=$line
   done < "$1"
-  wget -a download.txt -N -P /home/$usuario/tmp --progress=dot "$uri" 2>&1 |  grep "%" | sed -u -e "s,\.,,g" | awk '{print $2}' | sed -u -e "s,\%,,g" | dialog --title "Descargando $elemento" --gauge "Por favor espere ...." 10 60 0
+  wget -N -P /home/$usuario/tmp --progress=dot "$uri" 2>&1 |  grep "%" | sed -u -e "s,\.,,g" | awk '{print $2}' | sed -u -e "s,\%,,g" | dialog --title "Descargando $elemento" --gauge "Por favor espere ...." 10 60 0
 }
 
 #Añade una nueva categoría a emulation Station

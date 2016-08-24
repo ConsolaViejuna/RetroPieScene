@@ -77,8 +77,11 @@ _enciclopediaHomebrew(){
        _copiaElementosTema homebrew
        #Volvemos al menú principal
        _modificaCfg homebrew "Enciclopedia Homebrew" 
-       _descargaElementos "./homebrew/homebrewSh.uri" 3 "comandos sh"   
-       _copiaRoms homebrew sh        
+       #Descargamos roms y archivos sh
+       _descargaZip "./homebrew/homebrewRoms.uri" "roms"
+       _copiaRomsZip "homebrew"
+       _descargaZip "./homebrew/homebrewCover.uri" "carátulas"
+       _copiaCoversZip "homebrew"
        _msgFin "Enciclopedia Hombrew"
    else
      _msgTemaNoInstalado
