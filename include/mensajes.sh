@@ -14,7 +14,7 @@ _msgInicio(){
 #Mensaje de información al instalar la enciclopedia homebrew
 _msgEnciclopediaHomebrew(){
    dialog --title "Enciclopedia Homebrew" \
-          --msgbox "Se va a proceder a instalar la categoría Enciclopedia Homebrew en tu sistema, donde se añadirán los juegos de los desarroladores que disponen de categoría (ya que de momento tienen menos de 3 juegos). La Enciclopedia Homebrew es un libro que nace con la intención de llenar el hueco que hacía falta acerca de todos aquellos videojuegos actuales que se desarrollan para sistemas que ya hace muchos años que dejaron de publicar juegos oficiales. Los creadores de este genial proyecto son @blackmores_ de un pasado mejor IvánZX de ZxDev15 e @ignprigar de pb48k." 0 0
+          --msgbox "Se va a proceder a instalar la categoría Enciclopedia Homebrew en tu sistema, donde se añadirán los juegos de los desarrolladores que NO disponen de categoría (ya que de momento tienen menos de 3 juegos). La Enciclopedia Homebrew es un libro que nace con la intención de llenar el hueco que hacía falta acerca de todos aquellos videojuegos actuales que se desarrollan para sistemas que ya hace muchos años que dejaron de publicar juegos oficiales. Los creadores de este genial proyecto son @blackmores_ de un pasado mejor IvánZX de ZxDev15 e @ignprigar de pb48k." 0 0
 }
 
 #Mensaje de información al instalar la categoría Mojon Twins
