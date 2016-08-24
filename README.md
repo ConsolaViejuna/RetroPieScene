@@ -29,6 +29,14 @@ Ejecución en Linux:
 
 Histórico de cambios:
 ---------------------
+
+v 0.5.1
+--------
+ - Se añade los juegos a la categoría Enciclopedia Homebrew
+ 	+ Car Wars (Salvador Cantero)
+ 	+ Planeta Rojo (Salvador Cantero)
+ 	+ Escape From The Sewers (Revista yo tenía un juego)
+
 v 0.5.0
 --------
  - Se añade los juegos de Errazking.
