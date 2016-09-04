@@ -83,6 +83,7 @@ _enciclopediaHomebrew(){
        _descargaZip "./homebrew/homebrewCover.uri" "carátulas"
        _copiaCoversZip "homebrew"
        _msgFin "Enciclopedia Hombrew"
+       _msgInicio 
    else
      _msgTemaNoInstalado
      clear
@@ -117,6 +118,7 @@ _espSoft(){
        _descargaElementos "./espsoft/espSoftCover.uri" 21 "carátulas"
        _copiaCovers espsoft
        _msgFin "Esp Soft"
+       _main
    else
      _msgTemaNoInstalado
      clear
@@ -153,6 +155,7 @@ _mojonTwins(){
        _copiaCovers mojontwins
        _descomprimeZip "lala" "mojontwins"
        _msgFin "The Mojon Twins"
+       _main
    else
      _msgTemaNoInstalado
      clear
@@ -185,6 +188,7 @@ _errazking(){
        _descargaZip "./errazking/errazkingCover.uri" "carátulas"
        _copiaCoversZip "errazking"
        _msgFin "Errazking"
+       _main
    else
      _msgTemaNoInstalado
      clear

@@ -41,13 +41,16 @@ _copiaRomsZip(){
   local categoria=$1
   echo "$(date +%H:%M:%S) - Copiamos los archivos" >> log.txt  
   unzip -q -o /home/$usuario/tmp/roms.zip -d /home/$usuario/tmp
-  cp /home/$usuario/tmp/*.* /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
+  cp -r /home/$usuario/tmp/. /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
   echo "$(date +%H:%M:%S) - Terminamos de copiar los archivos" >> log.txt 2>&1
   chown $usuario /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
   chgrp $usuario /home/$usuario/RetroPie/roms/$categoria >> log.txt 2>&1
-  chown $usuario /home/$usuario/RetroPie/roms/$categoria/*.* >> log.txt 2>&1
-  chgrp $usuario /home/$usuario/RetroPie/roms/$categoria/*.* >> log.txt 2>&1
-  _borrarTemporales
+  chown -R $usuario /home/$usuario/RetroPie/roms/$categoria/. >> log.txt 2>&1
+  chgrp -R $usuario /home/$usuario/RetroPie/roms/$categoria/. >> log.txt 2>&1
+  # Borramos zip
+  rm /home/$usuario/RetroPie/roms/$categoria/roms.zip
+  # Borramos temporales
+  _borrarTemporalesZip
 }
 
 #Copia las carátulas de los juegos
@@ -100,6 +103,12 @@ _borrarTemporales(){
   echo "$(date +%H:%M:%S) - Borramos ficheros temporales" >> log.txt  
   sudo rm /home/$usuario/tmp/*.* >> log.txt 2>&1
   sudo rmdir /home/$usuario/tmp >> log.txt 2>&1
+}
+
+#Borramos fiheros temporales
+_borrarTemporalesZip(){
+  echo "$(date +%H:%M:%S) - Borramos ficheros temporales" >> log.txt  
+  sudo rm -dfr /home/$usuario/tmp >> log.txt 2>&1
 }
 
 #Crea los directorios necesarios

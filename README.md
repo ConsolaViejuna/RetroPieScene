@@ -29,6 +29,17 @@ Ejecución en Linux:
 
 Histórico de cambios:
 ---------------------
+v 0.5.2
+-------
+- Al instalara una categoría, volvemos al menú general, antes salía del script
+- Se han añadido varios juegos a la categoría Errazking
+  	+ MadRun
+  	+ Argos DX
+- Se han añadido varios juegos a la categoría Encliclopedia Homebrew
+	+ Elf La aventura I (Versión CPC)
+	+ Elf La aventura (Versión PC)
+	+ Heroes Rescue
+	+ Retroquest
 
 v 0.5.1
 --------
