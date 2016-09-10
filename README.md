@@ -29,6 +29,11 @@ Ejecución en Linux:
 
 Histórico de cambios:
 ---------------------
+
+v 0.5.3
+-------
+- Se añade juego mojono Super Uwol para SG-1000
+
 v 0.5.2
 -------
 - Al instalara una categoría, volvemos al menú general, antes salía del script
