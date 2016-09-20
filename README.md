@@ -30,6 +30,11 @@ Ejecución en Linux:
 Histórico de cambios:
 ---------------------
 
+v 0.5.4
+-------
+- Se añade juego mojono Uwol para PC, conversión por Augusto Ruiz.
+- Se actualiza juego Supero Uwol para SG-1000
+
 v 0.5.3
 -------
 - Se añade juego mojono Super Uwol para SG-1000

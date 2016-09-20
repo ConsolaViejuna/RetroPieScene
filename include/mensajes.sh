@@ -6,7 +6,7 @@
 
 #Mensaje de inicio
 _msgInicio(){
-    dialog --infobox "             RetroPie Script Scene v0.5.3
+    dialog --infobox "             RetroPie Script Scene v0.5.4
                       \n Disfruta la scene Española en tu Raspberry Pi" 4 50 ; sleep 2
 
 }
